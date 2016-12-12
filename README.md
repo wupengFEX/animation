@@ -32,7 +32,7 @@
 
 # 案例
 - 单对象串行；
-    
+```
     animate(propDomCallbackBtn1, {
         width: "70%"
     }, 1000, "ease", function () {
@@ -43,9 +43,10 @@
     }, 3000, "ease", function () {
         console.log("串行2");
     });
+```
   
 - 单对象并行；
-
+```
     animate(propDomCallbackBtn1, {
         width: "70%"
     }, 1000, "ease", function () {
@@ -59,9 +60,9 @@
     .endAnimaion(function() {
         console.log("并行动画全部执行完成");
     });
-
+```
 - 单对象串行&并行；
-
+```
     animate(propDomCallbackBtn1, {
         width: "70%"
     }, 1000, "ease", function () {
@@ -80,9 +81,9 @@
     }, 3000, "ease", function () {
         console.log("串行1");
     });
-    
+```    
 - 多对象并行；
-
+```
     animate(propDomCallbackBtn1, {
         width: "70%"
     }, 1000, "ease", function () {
@@ -110,7 +111,7 @@
     .endAnimaion(function() {
         console.log("并行动画全部执行完成2");
     });
-
+```
 # 参数
 - dom: dom元素，可以是一个元素，也可以是一个dom数组，不能为空；
 - property: 属性对象，不能为空；
@@ -133,8 +134,11 @@
 # 详细设计方案
 - 关键类
   - 入口类：每次单独（串行方式）调用一个`animate`函数时都会经过该类，他的主要作用是生成一个新的动画对象，并返回动画管理类，从而支持并行工作和链式调用，下面是其实现：
-![入口类](http://upload-images.jianshu.io/upload_images/2483150-78c56ed41879b1cb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-![入口类实现](http://upload-images.jianshu.io/upload_images/2483150-a3342c7906aa7f16.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+  
+      ![入口类](http://upload-images.jianshu.io/upload_images/2483150-78c56ed41879b1cb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+      
+      ![入口类实现](http://upload-images.jianshu.io/upload_images/2483150-a3342c7906aa7f16.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
   - 动画管理类：该类是管理每个对象生成的动画，包含三个主要属性和方法；
       - `isRuning`：当前动画执行状态，执行中/执行完成；
       - `asyncQueue`：动画队列，存储串并行动画对象；
@@ -142,7 +146,8 @@
       - `animate(ele, property, duration, easing, callback, delay, isAsync)`：动画开始入口；
       - `endAnimation(fn)`：结束并行动画，其中可以传入回调；
       - `stop()`：停止当前动画；
-![动画管理类](http://upload-images.jianshu.io/upload_images/2483150-0e3ea78dc31dc08c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+      ![动画管理类](http://upload-images.jianshu.io/upload_images/2483150-0e3ea78dc31dc08c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 - 动画方案时序图：粗略的分为这几个块，starUML不太会用，有的生命周期可能画的不太对，先将就着看看
 ![动画时序图](http://upload-images.jianshu.io/upload_images/2483150-1366cb25b7e5bc23.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
