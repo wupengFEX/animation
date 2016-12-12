@@ -1,6 +1,3 @@
-# 项目地址
-查看[github](https://github.com/wupengFEX/mip/blob/master/src/utils/animation.js)
-
 # 测试case
 查看[百度脑图](http://naotu.baidu.com/file/c256288088a1359a6dcdadd90cc6b0cc?token=086cb65c016d2bd2)附件
 
