@@ -12,7 +12,8 @@ Animation是一个移动端的动画库，采用transition的形式，支持串�
 
 # 用法
 ### 链式串行写法(isAsync为0)
-    animate(dom, {
+    
+    animate(dom, {
         width: "50%"
     }, 2000, "ease", function() {
         console.log("动画1");
@@ -24,7 +25,8 @@ Animation是一个移动端的动画库，采用transition的形式，支持串�
     }, 0, 0);
     
 ### 链式并行写法(isAsync为1，需要endAnimation在冰箱动画结束时调用)
-    animate(dom, {
+    
+    animate(dom, {
         width: "50%"
     }, 2000, "ease", function() {
         console.log("动画1");
@@ -60,9 +62,8 @@ Animation是一个移动端的动画库，采用transition的形式，支持串�
         width: "50%"
     }, 2000, "ease", function() {
         console.log("动画1");
-    }, 0, 1)
-    
-    .animate(dom2, {
+    }, 0, 1)    
+    animate(dom2, {
         height: 200
     }, 1000, "ease", function () {
         console.log("动画2");
@@ -70,6 +71,7 @@ Animation是一个移动端的动画库，采用transition的形式，支持串�
 
 
 ### 非链式并行写法
+    
     animate(dom1, {
         width: "50%"
     }, 2000, "ease", function() {
