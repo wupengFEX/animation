@@ -12,84 +12,78 @@ Animation是一个移动端的动画库，采用transition的形式，支持串�
 
 # 用法
 ### 链式串行写法(isAsync为0)
-    
     animate(dom, {
         width: "50%"
     }, 2000, "ease", function() {
-        console.log("动画1");
+        console.log("动画1");
     }, 0, 0)
-    .animate(dom, {
+    .animate(dom, {
         height: 200
     }, 1000, "ease", function () {
-        console.log("动画2");
+        console.log("动画2");
     }, 0, 0);
     
 ### 链式并行写法(isAsync为1，需要endAnimation在冰箱动画结束时调用)
-    
     animate(dom, {
         width: "50%"
     }, 2000, "ease", function() {
-        console.log("动画1");
+        console.log("动画1");
     }, 0, 1)
     .animate(propAsyncDom2, {
         height: 200
     }, 1000, "ease", function () {
-        console.log("动画2");
+        console.log("动画2");
     }, 0, 1)
     .endAnimation(function () {
-        log("并行动画都执行完成了");
+        console.log("并行动画都执行完成了");
     });
     
 ### 非链式串&并行
-
     animate(dom, {
         width: "50%"
     }, 2000, "ease", function() {
-        console.log("动画1");
+        console.log("动画1");
     }, 0, 1)
     .endAnimation(function () {
-        log("并行动画都执行完成了");
+        console.log("并行动画都执行完成了");
     });
-    .animate(dom, {
+    .animate(dom, {
         height: 200
     }, 1000, "ease", function () {
-        console.log("动画2");
+        console.log("动画2");
     }, 0, 0);
 
 ### 非链式并行写法（非链式都是并行动画，就算设置了isAsync）
-
     animate(dom1, {
         width: "50%"
     }, 2000, "ease", function() {
-        console.log("动画1");
+        console.log("动画1");
     }, 0, 1)    
     animate(dom2, {
         height: 200
     }, 1000, "ease", function () {
-        console.log("动画2");
+        console.log("动画2");
     }, 0, 0);
-
-
-### 非链式并行写法
     
+### 非链式并行写法
     animate(dom1, {
         width: "50%"
     }, 2000, "ease", function() {
-        console.log("动画1");
+        console.log("动画1");
     }, 0, 1)
     .endAnimation(function () {
-        log("并行动画都执行完成了");
+        console.log("并行动画都执行完成了");
     });
-    .animate(dom1, {
+    .animate(dom1, {
         height: 200
     }, 1000, "ease", function () {
-        console.log("动画2");
+        console.log("动画2");
     }, 0, 0);
     
-    .animate(dom2, {
+    animate(dom2, {
         height: 200
     }, 1000, "ease", function () {
-        console.log("动画3");
+        console.log("动画3");
     }, 0, 0);
     
 # 注意点
