@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
-    <title>动画组件参数测试</title>    
+    <title>动画组件参数测试</title>
     <style>
     html,
     body {
@@ -12,13 +12,13 @@
     }
     /* 自定义样式 */
     .red {
-        background:  red;       
+        background:  red;
     }
     .green {
-        background:  green;     
+        background:  green;
     }
     .grey {
-        background:  grey;      
+        background:  grey;
     }
     #testLog {
         position: fixed;
@@ -47,7 +47,7 @@
     }
     button {
         margin: 5px;
-        padding: 5px;        
+        padding: 5px;
     }
     </style>
 </head>
@@ -182,34 +182,61 @@ var spanDom3 = document.getElementById("span-not-dom");
 var spanDom4 = document.getElementById("span-not-dom-after");
 
 var animate1;
-btnDom1.onclick = function () {    
+btnDom1.onclick = function () {
     showLog();
     animate1 = animate(spanDom1, {
         width: "70%"
-    }, 5000, "ease", function() {
-        log("dom参数为dom元素");
-    }, 0, 0);
+    }, {
+        duration: 5000,
+        easeing: "ease",
+        delay: 0,
+        isAsync: 0,
+        cb: function() {
+            log("dom参数为dom元素");
+        }
+    })
+    .start();
 }
 btnDom2.onclick = function () {
     showLog();
     animate({}, {
         width: "70%"
-    }, 1000, "ease", function() {
-        log("dom参数为空对象");
-    }, 0, 0)
+    }, {
+        duration: 1000,
+        easeing: "ease",
+        delay: 0,
+        isAsync: 0,
+        cb: function() {
+            log("dom参数为空对象");
+        }
+    })
     .animate(spanDom4, {
         width: "70%"
-    }, 1000, "ease", function() {
-        log("dom参数不为对象的动画执行完成之后执行的动画");
-    }, 0, 0);    
+    }, {
+        duration: 1000,
+        easeing: "ease",
+        delay: 0,
+        isAsync: 0,
+        cb: function() {
+            log("dom参数不为对象的动画执行完成之后执行的动画");
+        }
+    })
+    .start();
 }
 btnDom3.onclick = function () {
     showLog();
     animate(spanDom2, {
         width: "70%"
-    }, 1000, "ease", function() {
-        log("dom参数为dom数组");
-    }, 0, 0).endAnimation();
+    }, {
+        duration: 1000,
+        easeing: "ease",
+        delay: 0,
+        isAsync: 0,
+        cb: function() {
+            log("dom参数为dom数组");
+        }
+    })
+    .start();
 }
 btnDom4.onclick = function () {
     animate1.stop();
@@ -234,57 +261,109 @@ var propDom8 = document.getElementById("prop-dom-transform");
 propDomBtn1.onclick = function () {
     showLog();
     animate(propDom1, {
-        
-    }, 1000, "ease", function() {
-        log("属性为空-空属性动画");
-    }, 0, 0)
+
+    }, {
+        duration: 1000,
+        easeing: "ease",
+        delay: 0,
+        isAsync: 0,
+        cb: function() {
+            log("属性为空-空属性动画");
+        }
+    })
     .animate(propDom2, {
         width: "70%"
-    }, 1000, "ease", function() {
-        log("属性为空-非空属性动画");
-    }, 0, 0);
+    }, {
+        duration: 1000,
+        easeing: "ease",
+        delay: 0,
+        isAsync: 0,
+        cb: function() {
+            log("属性为空-非空属性动画");
+        }
+    })
+    .start();
 };
 propDomBtn2.onclick = function () {
-    showLog();    
+    showLog();
     animate(propDom3, {
         width: "20%"
-    }, 1000, "ease", function() {
-        log("属性非空-不需要动画");
-    }, 0, 0)
+    }, {
+        duration: 1000,
+        easeing: "ease",
+        delay: 0,
+        isAsync: 0,
+        cb: function() {
+            log("属性非空-不需要动画");
+        }
+    })
     .animate(propDom4, {
         width: "70%"
-    }, 1000, "ease", function() {
-        log("属性非空-紧接的第二个需要的动画");
-    }, 0, 0);
+    }, {
+        duration: 1000,
+        easeing: "ease",
+        delay: 0,
+        isAsync: 0,
+        cb: function() {
+            log("属性非空-紧接的第二个需要的动画");
+        }
+    })
+    .start();
 };
 propDomBtn3.onclick = function () {
     showLog();
     animate(propDom5, {
         width: "70%",
         height: 200
-    }, 1000, "ease", function() {
-        log("属性非空，需要动画");
-    }, 0, 0);
+    }, {
+        duration: 1000,
+        easeing: "ease",
+        delay: 0,
+        isAsync: 0,
+        cb: function() {
+            log("属性非空，需要动画");
+        }
+    })
+    .start();
 };
 propDomBtn4.onclick = function () {
     showLog();
-    animate(propDom6, "", 1000, "ease", function() {
-        log("属性不是对象");
-    }, 0, 0)
+    animate(propDom6, "", {
+        duration: 1000,
+        easeing: "ease",
+        delay: 0,
+        isAsync: 0,
+        cb: function() {
+            log("属性不是对象");
+        }
+    })
     .animate(propDom7, {
         width: "70%"
-    }, 1000, "ease", function() {
-        log("属性不是对象-紧接的第二个动画");
-    }, 0, 0);
+    }, {
+        duration: 1000,
+        easeing: "ease",
+        delay: 0,
+        isAsync: 0,
+        cb: function() {
+            log("属性不是对象-紧接的第二个动画");
+        }
+    })
+    .start();
 };
-propDomBtn5.onclick = function () {    
+propDomBtn5.onclick = function () {
     showLog();
     animate(propDom8, {
         transform: "rotate(45deg)"
-        // width: 1000
-    }, 1000, "ease", function() {
-        log("transform动画");
-    }, 0, 0);
+    }, {
+        duration: 1000,
+        easeing: "ease",
+        delay: 0,
+        isAsync: 0,
+        cb: function() {
+            log("transform动画");
+        }
+    })
+    .start();
 };
 
 // 时间
@@ -298,15 +377,25 @@ propTimeBtn1.onclick = function () {
     showLog();
     animate(propTimeDom1, {
         width: "70%"
-    });
+    }, {
+        cb: function() {
+            log('不设置持续时间');
+        }
+    })
+    .start();
 };
 propTimeBtn2.onclick = function () {
     showLog();
     animate(propTimeDom2, {
         width: "70%"
-    }, 3000, "ease", function() {
-        log("设置延迟时间3s");
-    });       
+    }, {
+        duration: 3000,
+        easeing: "ease",
+        cb: function() {
+            log("设置延迟时间3s");
+        }
+    })
+    .start();
 };
 
 // 动画类型
@@ -323,22 +412,46 @@ propTypeBtn1.onclick = function () {
     showLog();
     animate(propEaseDom1, {
         width: "70%"
-    }, 1000 , "ease");
+    }, {
+        duration: 1000,
+        easeing: "ease"
+    })
+    .start();
     animate(propEaseInDom1, {
         width: "70%"
-    }, 1000 , "ease-in");
+    }, {
+        duration: 1000,
+        easeing: "ease-in"
+    })
+    .start();
     animate(propEaseOutDom1, {
         width: "70%"
-    }, 1000 , "ease-out");
+    }, {
+        duration: 1000,
+        easeing: "ease-out"
+    })
+    .start();
     animate(propEaseInOutDom1, {
         width: "70%"
-    }, 1000 , "ease-in-out");
+    }, {
+        duration: 1000,
+        easeing: "ease-in-out"
+    })
+    .start();
     animate(propLinearDom1, {
         width: "70%"
-    }, 1000 , "linear");
+    }, {
+        duration: 1000,
+        easeing: "linear"
+    })
+    .start();
     animate(propCubicDom1, {
         width: "70%"
-    }, 1000 , "cubic-bezier(0,0,1,1)");
+    }, {
+        duration: 1000,
+        easeing: "cubic-bezier(0,0,1,1)"
+    })
+    .start();
 };
 
 // 动画回调
@@ -364,69 +477,122 @@ propCallbackBtn1.onclick = function () {
     showLog();
     animate(propDomCallbackBtn1, {
         width: "70%"
-    }, 1000, "ease", function () {
-        log("链式写法，串行动画，变宽");
+    }, {
+        duration: 1000,
+        easeing: "ease",
+        cb: function() {
+            log("链式写法，串行动画，变宽");
+        }
     })
     .animate(propDomCallbackBtn2, {
         height: 200
-    }, 3000, "ease", function () {
-        log("链式写法，串行动画，变高");
-    });
+    }, {
+        duration: 3000,
+        easeing: "ease",
+        cb: function() {
+            log("链式写法，串行动画，变高");
+        }
+    })
+    .start();
 };
 propCallbackBtn2.onclick = function () {
     showLog();
     animate(propDomCallbackBtn3, {
         width: "70%"
-    }, 3000, "ease", function () {
-        log("链式写法，并行动画，变宽");
-    }, 0, 1)
+    }, {
+        duration: 3000,
+        easeing: "ease",
+        delay: 0,
+        isAsync: 1,
+        cb: function() {
+            log("链式写法，并行动画，变宽");
+        }
+    })
     .animate(propDomCallbackBtn4, {
         height: 200
-    }, 1000, "ease", function () {
-        log("链式写法，并行动画，变高");
-    }, 0, 1).endAnimation();
+    }, {
+        duration: 1000,
+        easeing: "ease",
+        delay: 0,
+        isAsync: 1,
+        cb: function() {
+            log("链式写法，并行动画，变高");
+        }
+    })
+    .start();
 }
 propCallbackBtn3.onclick = function () {
     showLog();
     animate(propDomCallbackBtn5, {
         width: "70%"
-    }, 1000, "ease", function () {
-        log("链式写法，串并行都存在-变宽");
+    }, {
+        duration: 1000,
+        easeing: "ease",
+        cb: function() {
+            log("链式写法，串并行都存在-变宽");
+        }
     })
     .animate(propDomCallbackBtn5, {
         height: 200
-    }, 4000, "ease", function () {
-        log("链式写法，串并行都存在-变高");
-    }, 0, 1)
+    }, {
+        duration: 4000,
+        easeing: "ease",
+        delay: 0,
+        isAsync: 1,
+        cb: function() {
+            log("链式写法，串并行都存在-变高");
+        }
+    })
     .animate(propDomCallbackBtn6, {
         width: "70%"
-    }, 2000, "ease", function () {
-        log("链式写法，串并行都存在-在上面元素变高的时候变宽");
-    }, 0, 1)
-    .endAnimation(function () {
+    }, {
+        duration: 2000,
+        easeing: "ease",
+        delay: 0,
+        isAsync: 1,
+        cb: function() {
+            log("链式写法，串并行都存在-在上面元素变高的时候变宽");
+        }
+    })
+    .start(function () {
         log("全部都执行完成了")
     });
 }
 propCallbackBtn4.onclick = function () {
     showLog();
     animate(propDomCallbackBtn7, {
-        width: "70%"        
-    }, 1000, "ease", function () {
-        log("非链式并行，变宽");
-    });
+        width: "70%"
+    }, {
+        duration: 1000,
+        easeing: "ease",
+        cb: function() {
+            log("非链式并行，变宽");
+        }
+    })
+    .start();
+
     animate(propDomCallbackBtn7, {
         height: 200
-    }, 500, "ease", function () {
-        log("非链式并行，变高");
-    });
+    }, {
+        duration: 500,
+        easeing: "ease",
+        cb: function() {
+            log("非链式并行，变高");
+        }
+    })
+    .start();
 }
 propCallbackBtn5.onclick = function () {
-    showLog();    
+    showLog();
     animate(propDomCallbackBtn8, {
         width: "70%"
-    }, 2000, "ease", function () {
-        log("非链式并行，变宽");
-    }).endAnimation(function () {
+    }, {
+        duration: 2000,
+        easeing: "ease",
+        cb: function() {
+            log("非链式并行，变宽");
+        }
+    }).start(function () {
         log("全部都执行完成了")
     });
 }
@@ -435,19 +601,34 @@ propCallbackBtn6.onclick = function () {
     showLog();
     animate(propDomCallbackBtn9, {
         width: "70%"
-    }, 3000, "ease", function () {
-        log("变宽");
-    });
+    }, {
+        duration: 3000,
+        easeing: "ease",
+        cb: function() {
+            log("变宽");
+        }
+    })
+    .start();
     animate(propDomCallbackBtn10, {
         height: 200
-    }, 5000, "ease", function () {
-        log("变高1");
-    });
+    }, {
+        duration: 5000,
+        easeing: "ease",
+        cb: function() {
+            log("变高1");
+        }
+    })
+    .start();
     animate(propDomCallbackBtn9, {
         height: 200
-    }, 1000, "ease", function () {
-        log("变高");        
-    });
+    }, {
+        duration: 1000,
+        easeing: "ease",
+        cb: function() {
+            log("变高");
+        }
+    })
+    .start();
 }
 
 // 动画延迟
@@ -459,16 +640,27 @@ var propDelayDom2 = document.getElementById("prop-not-delay-dom");
 propDelayBtn1.onclick = function () {
     showLog();
     animate(propDelayDom1, {
-        width: "70%"        
-    }, 1000, "ease", function () {
-        log("设置延迟动画");
-    }, 2000);
+        width: "70%"
+    }, {
+        duration: 2000,
+        easeing: "ease",
+        delay: 2000,
+        cb: function() {
+            log("设置延迟动画");
+        }
+    })
+    .start();
 
     animate(propDelayDom2, {
         width: "70%"
-    }, 1000, "ease", function () {
-        log("不设置延迟动画");
-    });
+    }, {
+        duration: 1000,
+        easeing: "ease",
+        cb: function() {
+            log("不设置延迟动画");
+        }
+    })
+    .start();
 }
 
 // 动画是否并行
@@ -482,41 +674,60 @@ propAsyncBtn1.onclick = function () {
     showLog();
     animate(propAsyncDom1, {
         width: "70%"
-    }, 2000, "ease", function() {
-        log("动画并行宽度");
-    }, 0, 1).endAnimation(function () {
+    }, {
+        duration: 2000,
+        easeing: "ease",
+        delay: 0,
+        isAsync: 1,
+        cb: function() {
+            log("动画并行宽度");
+        }
+    }).start(function () {
         log("结束1");
     });
     animate(propAsyncDom1, {
         height: 200
-    }, 1000, "ease", function () {
-        log("动画并行高度");
-    }, 0, 1).endAnimation(function () {
+    }, {
+        duration: 1000,
+        easeing: "ease",
+        delay: 0,
+        isAsync: 1,
+        cb: function() {
+            log("动画并行高度");
+        }
+    }).start(function () {
         log("结束2");
     })
+    .start();
 }
 
 propAsyncBtn2.onclick = function () {
     showLog();
     animate(propAsyncDom2, {
         width: "50%"
-    }, 2000, "ease", function() {
-        log("动画并行宽度");
-    }, 0, 1)
+    }, {
+        duration: 2000,
+        easeing: "ease",
+        delay: 0,
+        isAsync: 1,
+        cb: function() {
+            log("动画并行宽度");
+        }
+    })
     .animate(propAsyncDom2, {
         height: 200
-    }, 1000, "ease", function () {
-        log("动画并行高度");
-    }, 0, 1).endAnimation(function () {
+    }, {
+        duration: 1000,
+        easeing: "ease",
+        delay: 0,
+        isAsync: 1,
+        cb: function() {
+            log("动画并行高度");
+        }
+    }).start(function () {
         log("结束2");
     })
 };
-
-
-// var logEle = document.createElement("div");
-// var body = document.getElementsByTagName("body")[0];
-// logEle.id = "testLog";
-// body.append(logEle);
 
 function showLog () {
     var logEle = document.getElementById("testLog");
@@ -528,9 +739,8 @@ function log(str) {
     if (str.length == 0) {
         return;
     }
-    // debugger;
     str = "<p>" + str + "</p>";
-    var log = document.getElementById("testLog");    
+    var log = document.getElementById("testLog");
     log.innerHTML += str;
 }
 
