@@ -12,7 +12,7 @@
      * @const
      * @type {string}
      */
-    var HASH_TAG = '#';
+    var TAG = '#';
 	/**
      * CSS property unit cache
      *
@@ -26,7 +26,7 @@
      * @const
      * @type {Array}
      */
-    var PREFIX_TYPE = ['', 'webkit', 'moz', 'ms', 'o', 'Webkit', 'Moz', 'O'];
+    var VENDOR = ['', 'webkit', 'moz', 'ms', 'o', 'Webkit', 'Moz', 'O'];
 	/**
      * Reg for property unit
      *
@@ -39,22 +39,22 @@
      *
      * @type {string}
      */
-	var currentVendor;
+	var cVendor;
 	/**
 	 * Judge current vendor
 	 *
 	 */
 	function judgeVendor () {
-		if (currentVendor) {
+		if (cVendor) {
 			return;
 		}
 
 		var prop = "transition";
-		var supportElement = document.createElement('virtualDom');
-		for (var key in PREFIX_TYPE) {
-			var prefixedProp = PREFIX_TYPE[key] + prop.charAt(0).toUpperCase() + prop.slice(1);
-	        if (prefixedProp in supportElement.style) {
-				currentVendor = PREFIX_TYPE[key];
+		var ele = document.createElement('virtualDom');
+		for (var key in VENDOR) {
+			var vendor = VENDOR[key] + prop.charAt(0).toUpperCase() + prop.slice(1);
+	        if (vendor in ele.style) {
+				cVendor = VENDOR[key];
 				break;
 	        }
 		}
@@ -82,10 +82,7 @@
 	 */
 	function toFloat(num) {
 		num = parseFloat(num);
-		if (isNaN(num)) {
-			num = 0;
-		}
-		return num;
+		return !isNaN(num) ? num : 0;
 	}
 	/**
 	 * If object is empty
@@ -108,11 +105,7 @@
 	 * @return {Boolean} result
 	 */
 	function isHashTag(tag) {
-		var isHashTag = false;
-		if (tag === HASH_TAG) {
-			isHashTag = true;
-		}
-		return isHashTag;
+		return tag === TAG ? true : false;
 	}
 	/**
 	 * Check If need to animate. If a transition' property need not to tranform,
@@ -122,37 +115,37 @@
 	 * @return {boolean} if it need to animate
 	 */
 	function needAnimation(item) {
-		var needAnimation = false;
+		var flag = false;
 		var style = getComputedStyle(item.ele);
 		for (var key in item.property) {
 			if (item.property[key] !== style[key]) {
-				needAnimation = true;
+				flag = true;
 				break;
 			}
 		}
 		// If need't execute animation, excute callback
-		if (!needAnimation && item.fn) {
+		if (!flag && item.fn) {
 			item.fn();
 		}
-		return needAnimation;
+		return flag;
 	}
 	/**
 	 * Set property unit
 	 *
 	 * @param {Object} property dom property
 	 * @param {string} value dom property value
-	 * @param {Object} supportElement virtual dom
+	 * @param {Object} ele virtual dom
 	 * @return {string} correctly property value
 	 */
-	function unitProperty(property, value, supportElement) {
+	function unitProperty(property, value, ele) {
         if (value !== +value) {
             return value;
         }
         if (unitCache[property]) {
             return value + unitCache[property];
         }
-        supportElement.style[property] = 0;
-        var propValue = supportElement.style[property];
+        ele.style[property] = 0;
+        var propValue = ele.style[property];
         var match = propValue.match && propValue.match(UNIT_REG);
         if (match) {
             return value + (unitCache[property] = match[1]);
@@ -162,18 +155,16 @@
 	/**
 	 * Set up property, if existed in dom style, then return, otherwise select correctly vendor property
 	 *
-	 * @param {object} property dom property
+	 * @param {object} prop dom property
 	 * @param {Function} fn callback
 	 */
-	function setVendorProperty(property, fn) {
-		var supportElement = document.createElement('virtualDom');
-		var newProp = property;
-		if (!(property in supportElement.style)) {
-			newProp = !currentVendor ? currentVendor
-					   : currentVendor + property.charAt(0).toUpperCase() + property.slice(1);
-
+	function setVendorProperty(prop, fn) {
+		var ele = document.createElement('virtualDom');
+		var newProp = prop;
+		if (!(prop in ele.style)) {
+			newProp = !cVendor ? cVendor : cVendor + prop.charAt(0).toUpperCase() + prop.slice(1);
 	    }
-	    fn(property, newProp);
+	    fn(prop, newProp);
 	}
 	/**
 	 * Calculate animation attributes
@@ -220,7 +211,7 @@
 	     * @type {Array}
 	     * @private
 	     */
-		this.asyncQueue = [];
+		this.queue = [];
 		/**
 	     * Async animation callback
 	     *
@@ -249,7 +240,7 @@
 	 * @param {number} isExexuteNow if execute run immediately
 	 */
 	AnimationElement.prototype._startRun = function(isExexuteNow) {
-		if (!this.isRuning && isExexuteNow && this.asyncQueue.length > 0) {
+		if (!this.isRuning && isExexuteNow && this.queue.length > 0) {
 			this.isRuning = true;
 			this._run();
 		}
@@ -259,36 +250,36 @@
 	 *
 	 */
 	AnimationElement.prototype._run = function() {
-		if (this.asyncQueue.length === 0) {
+		if (this.queue.length === 0) {
 			return;
 		}
-		for (var i = 0; i < this.asyncQueue.length; i++) {
-			if (!isHashTag(this.asyncQueue[i])) {
-				if (needAnimation(this.asyncQueue[i])) {
-					this._addVendorEvent(this.asyncQueue[i], 'transitionend');
+		for (var i = 0; i < this.queue.length; i++) {
+			if (!isHashTag(this.queue[i])) {
+				if (needAnimation(this.queue[i])) {
+					this._addVendorEvent(this.queue[i], 'transitionend');
 
 					// If not support transition, use setTimeout
 					// At the same time, set 25ms as timeout
-					var outTime = this.asyncQueue[i].duration * 1000
-								  + this.asyncQueue[i].delay * 1000 + 25;
-					this._setAnimationTimeout(this._handle, this.asyncQueue[i], outTime);
-					this.asyncQueue[i].startTime = new Date().getTime();
+					var outTime = this.queue[i].duration * 1000
+								  + this.queue[i].delay * 1000 + 25;
+					this._setAnimationTimeout(this._handle, this.queue[i], outTime);
+					this.queue[i].startTime = new Date().getTime();
 
 					// add all vendor property
 					setVendorProperty('transition', function(oldProp, newProp) {
-						this.asyncQueue[i].ele.style[newProp] = 'all '.concat(
-							this.asyncQueue[i].duration, 's ',
-							this.asyncQueue[i].easing, ' ',
-							this.asyncQueue[i].delay, 's');
+						this.queue[i].ele.style[newProp] = 'all '.concat(
+							this.queue[i].duration, 's ',
+							this.queue[i].easing, ' ',
+							this.queue[i].delay, 's');
 					}.bind(this));
-					for (var j in this.asyncQueue[i].property) {
-						this.asyncQueue[i].ele.style[j] = this.asyncQueue[i].property[j];
+					for (var j in this.queue[i].property) {
+						this.queue[i].ele.style[j] = this.queue[i].property[j];
 					}
 				} else {
-					this.asyncQueue.splice(i, 1);
-					if (isHashTag(this.asyncQueue[0])) {
+					this.queue.splice(i, 1);
+					if (isHashTag(this.queue[0])) {
 						this.isRuning = false;
-						this.asyncQueue.shift();
+						this.queue.shift();
 					}
 					this._run();
 				}
@@ -309,7 +300,7 @@
 			clearTimeout(obj.timer);
 			this._removeVendorEvent(obj, 'transitionend');
 			var isAsync = this._deleteFinishElement(obj);
-			if (isHashTag(this.asyncQueue[0])) {
+			if (isHashTag(this.queue[0])) {
 				// If async animation, execute endAniamtion callback
 				if (isAsync) {
 					if (!!this.endCb[0]
@@ -318,7 +309,7 @@
 					}
 					this.endCb.shift();
 				}
-				this.asyncQueue.shift();
+				this.queue.shift();
 				this._startRun(1);
 			}
 		}
@@ -355,19 +346,19 @@
 	 	el.ele.removeEventListener(prop, el.bindFun);
 	 }
 	/**
-	 * When transition end triggered, delete the element in asyncQueue
+	 * When transition end triggered, delete the element in queue
 	 *
 	 * @param {Object} ele event
 	 * @return {boolean} whether the object is async
 	 */
 	AnimationElement.prototype._deleteFinishElement = function(ele) {
-		for (var i = 0; i < this.asyncQueue.length; i++) {
-			var currentAnimationDom = this.asyncQueue[i];
-			if (currentAnimationDom !== HASH_TAG && this.asyncQueue[i] === ele) {
-				if (!!this.asyncQueue[i].fn) {
-					this.asyncQueue[i].fn();
+		for (var i = 0; i < this.queue.length; i++) {
+			var currentAnimationDom = this.queue[i];
+			if (currentAnimationDom !== TAG && this.queue[i] === ele) {
+				if (!!this.queue[i].fn) {
+					this.queue[i].fn();
 				}
-				var deleteNode = this.asyncQueue.splice(i, 1);
+				var deleteNode = this.queue.splice(i, 1);
 				return deleteNode[0].isAsync;
 			}
 		}
@@ -379,7 +370,7 @@
 	 * @param {Object} propsObj property list
 	 */
 	AnimationElement.prototype._setInitializateProperty = function(propsObj) {
-		var supportElement = document.createElement('virtualDom');
+		var ele = document.createElement('virtualDom');
 		for (var key in propsObj) {
 			// compatible property vendor
 			setVendorProperty(key, function(oldProp, newProp) {
@@ -388,7 +379,7 @@
 	                delete propsObj[oldProp];
 				}
 			});
-			var props = unitProperty(key, propsObj[key], supportElement);
+			var props = unitProperty(key, propsObj[key], ele);
 			propsObj[key] = props;
 		}
 	}
@@ -399,34 +390,29 @@
 	 * @param {Object} property animation property
 	 * @param {Object} opt setting params
 	 */
-	AnimationElement.prototype._pushDoms = function(ele, property, opt) {
+	AnimationElement.prototype._pushDoms = function(ele, prop, opt) {
 		var currentObj;
 		if (ele.length > 0) {
 			for (var i = 0; i < ele.length; i++) {
 				if (ele[i] instanceof HTMLElement) {
 					opt.isAsync = 1;
-					this._pushToAsyncQueue(ele[i], property, opt);
+					this._pushToAsyncQueue(ele[i], prop, opt);
 				}
 			}
 		} else if (ele instanceof HTMLElement) {
-			this._pushToAsyncQueue(ele, property, opt);
+			this._pushToAsyncQueue(ele, prop, opt);
 		}
 	}
 	/**
 	 * Add object to async queue, if sync, add '#', otherwise when meet endAnimation, it will add '#'
 	 *
 	 * @param {Object || Array} ele dom property or list
-	 * @param {Object} property animation property
+	 * @param {Object} prop animation property
 	 * @param {Object} opt setting params
 	 */
-	AnimationElement.prototype._pushToAsyncQueue  = function(ele, property, opt) {
-		var currentObj = calculateProperty(ele, property, opt);
-		// 是否是并行
-		if (currentObj.isAsync) {
-			this.asyncQueue.push(currentObj);
-		} else {
-			this.asyncQueue.push(currentObj, HASH_TAG);
-		}
+	AnimationElement.prototype._pushToAsyncQueue  = function(ele, prop, opt) {
+		var obj = calculateProperty(ele, prop, opt);
+		obj.isAsync ? this.queue.push(obj) : this.queue.push(obj, TAG);
 	}
 	/**
 	 * Animate Function, support sync and async animation
@@ -449,12 +435,12 @@
 	 * @return prototype
 	 */
 	AnimationElement.prototype.start = function(fn) {
-		if (this.asyncQueue.length === 0) {
+		if (this.queue.length === 0) {
 			return;
 		}
 		this.endCb.push(fn);
-		if (!isHashTag(this.asyncQueue[this.asyncQueue.length - 1])) {
-			this.asyncQueue.push(HASH_TAG);
+		if (!isHashTag(this.queue[this.queue.length - 1])) {
+			this.queue.push(TAG);
 		}
 		if (!this.isRuning) {
 			this._startRun(1);
@@ -468,9 +454,9 @@
 	 */
 	AnimationElement.prototype.stop = function() {
 		this.isRuning = false;
-		for (var i = 0; i < this.asyncQueue.length; i++) {
-			var asycEvent = this.asyncQueue[i];
-			if (!isHashTag(this.asyncQueue[i])) {
+		for (var i = 0; i < this.queue.length; i++) {
+			var asycEvent = this.queue[i];
+			if (!isHashTag(this.queue[i])) {
 				clearTimeout(asycEvent.timer);
 				var style = getComputedStyle(asycEvent.ele);
 				this._removeVendorEvent(asycEvent, 'transitionend');
@@ -482,7 +468,7 @@
 				}
 			}
 		}
-		this.asyncQueue = [];
+		this.queue = [];
 		return this;
 	}
 	/**
