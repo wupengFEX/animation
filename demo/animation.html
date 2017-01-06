@@ -188,7 +188,7 @@ btnDom1.onclick = function () {
         width: "70%"
     }, {
         duration: 5000,
-        easeing: "ease",
+        easing: "ease",
         delay: 0,
         isAsync: 0,
         cb: function() {
@@ -203,7 +203,7 @@ btnDom2.onclick = function () {
         width: "70%"
     }, {
         duration: 1000,
-        easeing: "ease",
+        easing: "ease",
         delay: 0,
         isAsync: 0,
         cb: function() {
@@ -214,7 +214,7 @@ btnDom2.onclick = function () {
         width: "70%"
     }, {
         duration: 1000,
-        easeing: "ease",
+        easing: "ease",
         delay: 0,
         isAsync: 0,
         cb: function() {
@@ -229,7 +229,7 @@ btnDom3.onclick = function () {
         width: "70%"
     }, {
         duration: 1000,
-        easeing: "ease",
+        easing: "ease",
         delay: 0,
         isAsync: 0,
         cb: function() {
@@ -264,7 +264,7 @@ propDomBtn1.onclick = function () {
 
     }, {
         duration: 1000,
-        easeing: "ease",
+        easing: "ease",
         delay: 0,
         isAsync: 0,
         cb: function() {
@@ -275,7 +275,7 @@ propDomBtn1.onclick = function () {
         width: "70%"
     }, {
         duration: 1000,
-        easeing: "ease",
+        easing: "ease",
         delay: 0,
         isAsync: 0,
         cb: function() {
@@ -290,7 +290,7 @@ propDomBtn2.onclick = function () {
         width: "20%"
     }, {
         duration: 1000,
-        easeing: "ease",
+        easing: "ease",
         delay: 0,
         isAsync: 0,
         cb: function() {
@@ -301,7 +301,7 @@ propDomBtn2.onclick = function () {
         width: "70%"
     }, {
         duration: 1000,
-        easeing: "ease",
+        easing: "ease",
         delay: 0,
         isAsync: 0,
         cb: function() {
@@ -317,7 +317,7 @@ propDomBtn3.onclick = function () {
         height: 200
     }, {
         duration: 1000,
-        easeing: "ease",
+        easing: "ease",
         delay: 0,
         isAsync: 0,
         cb: function() {
@@ -330,7 +330,7 @@ propDomBtn4.onclick = function () {
     showLog();
     animate(propDom6, "", {
         duration: 1000,
-        easeing: "ease",
+        easing: "ease",
         delay: 0,
         isAsync: 0,
         cb: function() {
@@ -341,7 +341,7 @@ propDomBtn4.onclick = function () {
         width: "70%"
     }, {
         duration: 1000,
-        easeing: "ease",
+        easing: "ease",
         delay: 0,
         isAsync: 0,
         cb: function() {
@@ -356,7 +356,7 @@ propDomBtn5.onclick = function () {
         transform: "rotate(45deg)"
     }, {
         duration: 1000,
-        easeing: "ease",
+        easing: "ease",
         delay: 0,
         isAsync: 0,
         cb: function() {
@@ -390,7 +390,7 @@ propTimeBtn2.onclick = function () {
         width: "70%"
     }, {
         duration: 3000,
-        easeing: "ease",
+        easing: "ease",
         cb: function() {
             log("设置延迟时间3s");
         }
@@ -414,42 +414,42 @@ propTypeBtn1.onclick = function () {
         width: "70%"
     }, {
         duration: 1000,
-        easeing: "ease"
+        easing: "ease"
     })
     .start();
     animate(propEaseInDom1, {
         width: "70%"
     }, {
         duration: 1000,
-        easeing: "ease-in"
+        easing: "ease-in"
     })
     .start();
     animate(propEaseOutDom1, {
         width: "70%"
     }, {
         duration: 1000,
-        easeing: "ease-out"
+        easing: "ease-out"
     })
     .start();
     animate(propEaseInOutDom1, {
         width: "70%"
     }, {
         duration: 1000,
-        easeing: "ease-in-out"
+        easing: "ease-in-out"
     })
     .start();
     animate(propLinearDom1, {
         width: "70%"
     }, {
         duration: 1000,
-        easeing: "linear"
+        easing: "linear"
     })
     .start();
     animate(propCubicDom1, {
         width: "70%"
     }, {
         duration: 1000,
-        easeing: "cubic-bezier(0,0,1,1)"
+        easing: "cubic-bezier(0,0,1,1)"
     })
     .start();
 };
@@ -479,7 +479,7 @@ propCallbackBtn1.onclick = function () {
         width: "70%"
     }, {
         duration: 1000,
-        easeing: "ease",
+        easing: "ease",
         cb: function() {
             log("链式写法，串行动画，变宽");
         }
@@ -488,7 +488,7 @@ propCallbackBtn1.onclick = function () {
         height: 200
     }, {
         duration: 3000,
-        easeing: "ease",
+        easing: "ease",
         cb: function() {
             log("链式写法，串行动画，变高");
         }
@@ -501,7 +501,7 @@ propCallbackBtn2.onclick = function () {
         width: "70%"
     }, {
         duration: 3000,
-        easeing: "ease",
+        easing: "ease",
         delay: 0,
         isAsync: 1,
         cb: function() {
@@ -512,7 +512,7 @@ propCallbackBtn2.onclick = function () {
         height: 200
     }, {
         duration: 1000,
-        easeing: "ease",
+        easing: "ease",
         delay: 0,
         isAsync: 1,
         cb: function() {
@@ -527,7 +527,7 @@ propCallbackBtn3.onclick = function () {
         width: "70%"
     }, {
         duration: 1000,
-        easeing: "ease",
+        easing: "ease",
         cb: function() {
             log("链式写法，串并行都存在-变宽");
         }
@@ -536,7 +536,7 @@ propCallbackBtn3.onclick = function () {
         height: 200
     }, {
         duration: 4000,
-        easeing: "ease",
+        easing: "ease",
         delay: 0,
         isAsync: 1,
         cb: function() {
@@ -547,7 +547,7 @@ propCallbackBtn3.onclick = function () {
         width: "70%"
     }, {
         duration: 2000,
-        easeing: "ease",
+        easing: "ease",
         delay: 0,
         isAsync: 1,
         cb: function() {
@@ -564,7 +564,7 @@ propCallbackBtn4.onclick = function () {
         width: "70%"
     }, {
         duration: 1000,
-        easeing: "ease",
+        easing: "ease",
         cb: function() {
             log("非链式并行，变宽");
         }
@@ -575,7 +575,7 @@ propCallbackBtn4.onclick = function () {
         height: 200
     }, {
         duration: 500,
-        easeing: "ease",
+        easing: "ease",
         cb: function() {
             log("非链式并行，变高");
         }
@@ -588,7 +588,7 @@ propCallbackBtn5.onclick = function () {
         width: "70%"
     }, {
         duration: 2000,
-        easeing: "ease",
+        easing: "ease",
         cb: function() {
             log("非链式并行，变宽");
         }
@@ -603,7 +603,7 @@ propCallbackBtn6.onclick = function () {
         width: "70%"
     }, {
         duration: 3000,
-        easeing: "ease",
+        easing: "ease",
         cb: function() {
             log("变宽");
         }
@@ -613,7 +613,7 @@ propCallbackBtn6.onclick = function () {
         height: 200
     }, {
         duration: 5000,
-        easeing: "ease",
+        easing: "ease",
         cb: function() {
             log("变高1");
         }
@@ -623,7 +623,7 @@ propCallbackBtn6.onclick = function () {
         height: 200
     }, {
         duration: 1000,
-        easeing: "ease",
+        easing: "ease",
         cb: function() {
             log("变高");
         }
@@ -643,7 +643,7 @@ propDelayBtn1.onclick = function () {
         width: "70%"
     }, {
         duration: 2000,
-        easeing: "ease",
+        easing: "ease",
         delay: 2000,
         cb: function() {
             log("设置延迟动画");
@@ -655,7 +655,7 @@ propDelayBtn1.onclick = function () {
         width: "70%"
     }, {
         duration: 1000,
-        easeing: "ease",
+        easing: "ease",
         cb: function() {
             log("不设置延迟动画");
         }
@@ -676,7 +676,7 @@ propAsyncBtn1.onclick = function () {
         width: "70%"
     }, {
         duration: 2000,
-        easeing: "ease",
+        easing: "ease",
         delay: 0,
         isAsync: 1,
         cb: function() {
@@ -689,7 +689,7 @@ propAsyncBtn1.onclick = function () {
         height: 200
     }, {
         duration: 1000,
-        easeing: "ease",
+        easing: "ease",
         delay: 0,
         isAsync: 1,
         cb: function() {
@@ -707,7 +707,7 @@ propAsyncBtn2.onclick = function () {
         width: "50%"
     }, {
         duration: 2000,
-        easeing: "ease",
+        easing: "ease",
         delay: 0,
         isAsync: 1,
         cb: function() {
@@ -718,7 +718,7 @@ propAsyncBtn2.onclick = function () {
         height: 200
     }, {
         duration: 1000,
-        easeing: "ease",
+        easing: "ease",
         delay: 0,
         isAsync: 1,
         cb: function() {
