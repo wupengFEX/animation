@@ -32,28 +32,47 @@
 ```
     animate(propDomCallbackBtn1, {
         width: "70%"
-    }, 1000, "ease", function () {
-        console.log("串行1");
+    }, {
+      duration: 1000,
+      easing: "ease",
+      cb: function () {
+          console.log("串行1");
+      }
     })
     .animate(propDomCallbackBtn2, {
         height: 200
-    }, 3000, "ease", function () {
-        console.log("串行2");
+    }, {
+      duration: 3000,
+      easing: "ease",
+      cb: function () {
+          console.log("串行2");
+      }
     });
 ```
-  
+
 - 单对象并行；
 ```
     animate(propDomCallbackBtn1, {
         width: "70%"
-    }, 1000, "ease", function () {
-        console.log("并行1");
-    }, 2000, 1)
+    }, {
+      duration: 1000,
+      easing: "ease",
+      delay: 2000,
+      isAsync: 1
+      cb: function () {
+          console.log("并行1");
+      }
+    })
     .animate(propDomCallbackBtn2, {
         height: 200
-    }, 3000, "ease", function () {
-        console.log("并行2");
-    }, 0, 1)
+    }, {
+      duration: 3000,
+      easing: "ease",
+      isAsync: 1
+      cb: function () {
+          console.log("并行2");
+      }
+    })
     .endAnimaion(function() {
         console.log("并行动画全部执行完成");
     });
@@ -62,49 +81,85 @@
 ```
     animate(propDomCallbackBtn1, {
         width: "70%"
-    }, 1000, "ease", function () {
-        console.log("并行1");
-    }, 2000, 1)
+    }, {
+      duration: 1000,
+      easing: "ease",
+      isAsync: 1
+      cb: function () {
+          console.log("并行1");
+      }
+    })
     .animate(propDomCallbackBtn2, {
         height: 200
-    }, 3000, "ease", function () {
-        console.log("并行2");
-    }, 0, 1)
+    }, {
+      duration: 3000,
+      easing: "ease",
+      isAsync: 1
+      cb: function () {
+          console.log("并行2");
+      }
+    })
     .start(function() {
         console.log("并行动画全部执行完成");
     })
     .animate(propDomCallbackBtn2, {
         height: 200
-    }, 3000, "ease", function () {
-        console.log("串行1");
+    }, {
+      duration: 3000,
+      easing: "ease",
+      cb: function () {
+          console.log("串行1");
+      }
     });
-```    
+```
 - 多对象并行；
 ```
     animate(propDomCallbackBtn1, {
         width: "70%"
-    }, 1000, "ease", function () {
-        console.log("并行1");
-    }, 2000, 1)
+    }, {
+      duration: 1000,
+      easing: "ease",
+      delay: 2000,
+      isAsync: 1,
+      cb: function () {
+          console.log("串行1");
+      }
+    })
     .animate(propDomCallbackBtn1, {
         height: 200
-    }, 3000, "ease", function () {
-        console.log("并行2");
-    }, 0, 1)
+    }, {
+      duration: 3000,
+      easing: "ease",
+      isAsync: 1,
+      cb: function () {
+          console.log("串行1");
+      }
+    })
     .start(function() {
         console.log("并行动画全部执行完成1");
     });
 
     animate(propDomCallbackBtn2, {
         width: "70%"
-    }, 1000, "ease", function () {
-        console.log("并行3");
-    }, 2000, 1)
+    }, {
+      duration: 1000,
+      easing: "ease",
+      delay: 2000,
+      isAsync: 1,
+      cb: function () {
+          console.log("并行3");
+      }
+    })
     .animate(propDomCallbackBtn2, {
         height: 200
-    }, 3000, "ease", function () {
-        console.log("并行4");
-    }, 0, 1)
+    }, {
+      duration: 3000,
+      easing: "ease",
+      isAsync: 1,
+      cb: function () {
+          console.log("并行4");
+      }
+    })
     .start(function() {
         console.log("并行动画全部执行完成2");
     });
@@ -112,11 +167,12 @@
 # 参数
 - dom: dom元素，可以是一个元素，也可以是一个dom数组，不能为空；
 - property: 属性对象，不能为空；
-- duration: 动画持续时间，如果不设置默认为0.4s；
-- easing: 动画执行的形式, 如"ease, ease-in, ease-out, ease-in-out, linear, cubic-bezier", 默认为"linear";
-- callback: 回调函数，在动画执行完成之后执行，分为两种，一种为单个动画执行完成之后的回调，另一种是所有并行动画执行完成的回调；
-- delay: 延迟时间，如果不设置默认为0s；
-- isAsync: 是否动画是并行，0为串行，1为并行;
+- opt: 动画相关参数
+  - opt.duration: 动画持续时间，如果不设置默认为0.4s；
+  - opt.easing: 动画执行的形式, 如"ease, ease-in, ease-out, ease-in-out, linear, cubic-bezier", 默认为"linear";
+  - opt.callback: 回调函数，在动画执行完成之后执行，分为两种，一种为单个动画执行完成之后的回调，另一种是所有并行动画执行完成的回调；
+  - opt.delay: 延迟时间，如果不设置默认为0s；
+  - opt.isAsync: 是否动画是并行，0为串行，1为并行;
 
 # 注意点
 - 动画需要调用start才能开始执行；
@@ -130,16 +186,16 @@
 # 详细设计方案
 - 关键类
   - 入口类：每次单独（串行方式）调用一个`animate`函数时都会经过该类，他的主要作用是生成一个新的动画对象，并返回动画管理类，从而支持并行工作和链式调用，下面是其实现：
-  
+
       ![入口类](http://upload-images.jianshu.io/upload_images/2483150-78c56ed41879b1cb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-      
+
       ![入口类实现](http://upload-images.jianshu.io/upload_images/2483150-a3342c7906aa7f16.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
   - 动画管理类：该类是管理每个对象生成的动画，包含三个主要属性和方法；
       - `isRuning`：当前动画执行状态，执行中/执行完成；
       - `asyncQueue`：动画队列，存储串并行动画对象；
       - `endCallback`：并行动画全部执行完成的回调队列；
-      - `animate(ele, property, duration, easing, callback, delay, isAsync)`：动画开始入口；
+      - `animate(ele, property, opt)`：动画开始入口；        
       - `start(fn)`：结束并行动画，其中可以传入回调；
       - `stop()`：停止当前动画；
 
