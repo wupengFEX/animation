@@ -70,7 +70,7 @@
     }, 3000, "ease", function () {
         console.log("并行2");
     }, 0, 1)
-    .endAnimaion(function() {
+    .start(function() {
         console.log("并行动画全部执行完成");
     })
     .animate(propDomCallbackBtn2, {
@@ -91,7 +91,7 @@
     }, 3000, "ease", function () {
         console.log("并行2");
     }, 0, 1)
-    .endAnimaion(function() {
+    .start(function() {
         console.log("并行动画全部执行完成1");
     });
 
@@ -105,7 +105,7 @@
     }, 3000, "ease", function () {
         console.log("并行4");
     }, 0, 1)
-    .endAnimaion(function() {
+    .start(function() {
         console.log("并行动画全部执行完成2");
     });
 ```
@@ -119,8 +119,7 @@
 - isAsync: 是否动画是并行，0为串行，1为并行;
 
 # 注意点
-- 并行动画需要调用endAnimation才能结束并执行；
-- dom参数为数组默认为并行动画，需要调用endAnimation；
+- 动画需要调用start才能开始执行；
 - 非链式写法是创建了多个对象，所以表现为并行动画，不能通过isAsync控制为串行；
 
 # 设计方案概述
@@ -141,7 +140,7 @@
       - `asyncQueue`：动画队列，存储串并行动画对象；
       - `endCallback`：并行动画全部执行完成的回调队列；
       - `animate(ele, property, duration, easing, callback, delay, isAsync)`：动画开始入口；
-      - `endAnimation(fn)`：结束并行动画，其中可以传入回调；
+      - `start(fn)`：结束并行动画，其中可以传入回调；
       - `stop()`：停止当前动画；
 
       ![动画管理类](http://upload-images.jianshu.io/upload_images/2483150-0e3ea78dc31dc08c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
