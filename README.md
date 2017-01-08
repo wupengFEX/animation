@@ -1,8 +1,8 @@
-# 测试case
-查看[百度脑图](http://naotu.baidu.com/file/c256288088a1359a6dcdadd90cc6b0cc?token=086cb65c016d2bd2)附件
-
 #Usage
 - `npm install io-animation`
+
+# 测试case
+查看[百度脑图](http://naotu.baidu.com/file/c256288088a1359a6dcdadd90cc6b0cc?token=086cb65c016d2bd2)附件
 
 # 测试页面
 见demo
@@ -192,7 +192,7 @@
 
       ![入口类](http://upload-images.jianshu.io/upload_images/2483150-78c56ed41879b1cb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-      ![入口类实现](http://upload-images.jianshu.io/upload_images/2483150-a3342c7906aa7f16.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+      ![入口类实现](http://upload-images.jianshu.io/upload_images/2483150-3331fa9e51b54982.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
   - 动画管理类：该类是管理每个对象生成的动画，包含三个主要属性和方法；
       - `isRuning`：当前动画执行状态，执行中/执行完成；
@@ -215,7 +215,7 @@
   - 第七步：所有回调都执行完成之后进行并行动画终止回调的执行；
   - 第八步：如果队列中仍然存在动画对象，执行下一个，跳转至步骤一；
 
-# 设计棘手点
+# 设计注意点
 - transitionend多次执行：transitionend执行时机是每一个属性执行完成就会执行，所以你的动画有几个属性，他就会执行几次。这个比较好解决，在执行时remove了transitionend事件监听即可；但是如果多个并行动画执行在一个dom上时就蛋疼了，单纯remove监听是做不到的，可以通过判断动画delay+duration来判断是否是当前动画；
 - 不支持transition怎么办：该实现方案采用的方式是，transition和setTimeout会同时执行，在一次回调处理时会clearTimeout和remove监听，从而做到双保险的作用；
 
