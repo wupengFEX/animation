@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+    <title>动画组件参数测试</title>
+    <style>
+    html,
+    body {
+        width: 95%;
+        height: 100%;
+        margin: 0 auto;
+    }
+    /* 自定义样式 */
+    .red {
+        background:  red;
+    }
+    div .green {
+        background:  green;
+    }
+    .grey {
+        background:  grey;
+    }
+    #testLog {
+        position: fixed;
+        top: -10px;
+        left: 0;
+        display: none;
+        width: 100%;
+        height: 150px;
+        background: #000;
+        opacity: 0.3;
+        color: #fff;
+        text-align: left;
+        font-size: 18px;
+        overflow: scroll;
+    }
+    #testLog p {
+        padding-right: 20px;
+        height: 40px;
+    }
+    .animateArea {
+        width: 100%;
+        min-height: 300px;
+        border: 1px dotted #785;
+        background: #f5f5f5;
+        margin: 0 auto;
+        margin-top: 10px;
+    }
+    .animate {
+        width: 50px;
+        height: 50px;
+        background: red;
+        margin-top: 10px;
+    }
+    button {
+        padding: 6px 16px;
+        color: #fff;
+        background-color: #F88E8B;
+    }
+    </style>
+</head>
+<body>
+
+<div id="testLog"></div>
+
+<!-- 正文 -->
+<h1>Animation Demo</h1>
+
+<!-- dom参数测试 -->
+<br>
+<h2>第一个参数：Dom元素测试</h2>
+<div class="animateArea">
+    <button id="btn-dom-one">动画1</button>
+    <button id="btn-dom-pause">停止</button>
+    <div class="animate" id="span-dom"></div>
+</div>
+
+<p>1. dom参数不是dom元素</p>
+<p>2. dom参数是dom元素</p>
+<div class="animateArea">
+    <button id="btn-dom-second">动画2</button>
+    <div class="animate" id="span-not-dom"></div>
+    <div id="span-not-dom-after" class="animate green"></div>
+</div>
+
+<p>1. dom参数为dom数组</p>
+<p>2. dom参数为dom数组</p>
+<div class="animateArea">
+    <button id="btn-dom-third">动画3</button>
+    <div class="span-dom-array animate"></div>
+    <div class="span-dom-array green animate"></div>
+</div>
+
+<!-- 属性列表，均有两个动画 -->
+<br>
+<h2>第二个参数：Dom动画属性测试</h2>
+
+<p>1. 属性为空-空属性动画</p>
+<p>2. 属性为空-非空属性动画</p>
+<div class="animateArea">
+    <button id="prop-empty">动画4</button>
+    <div class="animate" id="prop-dom-empty-one"></div>
+    <div class="green animate" id="prop-dom-empty-second"></div>
+</div>
+
+<p>1. 属性非空-不需要动画</p>
+<p>2. 属性非空-紧接的第二个需要的动画</p>
+<div class="animateArea">
+    <button id="prop-not-need">动画5</button>
+    <div class="animate" id="prop-dom-empty-not-animate"></div>
+    <div class="green animate" id="prop-dom-empty-animate"></div>
+</div>
+
+<p>1. 属性非空，需要动画</p>
+<div class="animateArea">
+    <button id="prop-need">动画6</button></p>
+    <div class="animate" id="prop-dom-need-animate"></div>
+</div>
+
+<p>1. 属性不是对象</p>
+<p>2. 属性不是对象-紧接的第二个动画</p>
+<div class="animateArea">
+    <button id="prop-not-obj">动画7</button>
+    <div  class="animate" id="prop-dom-not-obj"></div>
+    <div class="animate green" id="prop-dom-not-obj-second"></div>
+</div>
+
+<p>1. transform动画</p>
+<div class="animateArea">
+    <button id="prop-transform">动画8</button>
+    <div class="animate" id="prop-dom-transform"></div>
+</div>
+
+<!-- 持续时间 -->
+<br>
+<h2>第三个参数：持续时间</h2>
+
+<p>1. 不设置时间</p>
+<div class="animateArea">
+    <button id="prop-time-not">动画9</button>
+    <div class="animate" id="prop-dom-time-not"></div>
+</div>
+
+<p>1. 设置时间为3s</p>
+<div class="animateArea">
+    <button id="prop-time">动画10</button>
+    <div class="animate" id="prop-dom-time"></div>
+</div>
+
+<!-- 动画类型 -->
+<p>1. ease动画</p>
+<p>2. ease-in动画</p>
+<p>3. ease-out动画</p>
+<p>4. ease-in动画</p>
+<p>5. ease-in-out动画</p>
+<p>6. linear动画</p>
+<p>7. cubic-bezier(0,0,1,1)动画</p>
+<h2>第四个参数：动画类型</h2>
+<div class="animateArea">
+    <button id="prop-type">动画11</button>
+    <div id="prop-ease"></div>
+    <div id="prop-ease-in" class="animate green"></div>
+    <div id="prop-ease-out" class="animate" style="background:pink;"></div>
+    <div id="prop-ease-in-out" class="animate" style="background:grey;"></div>
+    <div id="prop-linear" class="animate" style="background:orange;"></div>
+    <div id="prop-cubic" class="animate" style="background:yellow;"></div>
+</div>
+
+<!-- 动画回调 -->
+<br>
+<h2>第五个参数：动画回调</h2>
+
+<p>1. 链式写法，串行动画，变宽</p>
+<p>2. 链式写法，串行动画，变高</p>
+<div class="animateArea">
+    <button id="prop-callback-sync">动画12</button>
+    <div class="animate" id="prop-callback-dom-sync"></div>
+    <div class="green animate" id="prop-callback-dom-sync-second"></div>
+</div>
+
+<p>1. 链式写法，并行动画-变宽</p>
+<p>2. 链式写法，并行动画-变高</p>
+<div class="animateArea">
+    <button id="prop-callback-async">动画13</button>
+    <div class="animate" id="prop-callback-dom-async"></div>
+    <div class="green animate" id="prop-callback-dom-async-second"></div>
+</div>
+
+<p>1. 链式写法，串并行都存在-变宽->变高</p>
+<p>2. 链式写法，串并行都存在-在上面元素变高的时候变宽</p>
+<div class="animateArea">
+    <button id="prop-callback-sync-async">动画14</button>
+    <div class="animate" id="prop-callback-dom-sync-async"></div>
+    <div class="green animate" id="prop-callback-dom-sync-async-second"></div>
+</div>
+
+<p>1. 非链式并行，变宽->变高</p>
+<div class="animateArea">
+    <button id="prop-callback-not-async">动画15</button>
+    <div class="animate" id="prop-callback-dom-not-async"></div>
+</div>
+
+<p>1. 多元素并行，通过传入dom数组</p>
+<p>2. 多元素并行，通过传入dom数组</p>
+<div class="animateArea">
+    <button id="prop-callback-more-async">动画16</button>
+    <div class="prop-callback animate"></div>
+    <div class="prop-callback green animate"></div>
+</div>
+
+<p>1. 串行，第一个动画没有回调</p>
+<p>2. 串行，第二个动画有回调</p>
+<div class="animateArea">
+    <button id="prop-callback-sequence">动画17</button>
+    <div class="animate" id="prop-callback-has"></div>
+    <div class="green animate" id="prop-callback-has-second"></div>
+</div>
+
+<!-- 动画延迟 -->
+<p>1. 设置延迟动画</p>
+<p>2. 不设置延迟回调</p>
+<h2>第六个参数：动画延迟</h2>
+<div class="animateArea">
+    <button id="prop-delay">动画18</button>
+    <div class="animate" id="prop-delay-dom"></div>
+    <div class="green animate" id="prop-not-delay-dom"></div>
+</div>
+
+<!-- 动画是否并行 -->
+<br>
+<h2>第七个参数：动画是否并行</h2>
+
+<p>1. 动画并行</p>
+<div class="animateArea">
+    <button id="prop-async-not">动画19</button>
+    <div class="animate" id="prop-async-dom"></div>
+</div>
+
+<p>1. 动画不并行</p>
+<div class="animateArea">
+    <button id="prop-async">动画20</button>
+    <div class="animate" id="prop-not-async-dom"></div>
+</div>
+<script type="text/javascript" src="../src/animation.js"></script>
+<script type="text/javascript" src="./demo.js"></script>
+</body>
+</html>
