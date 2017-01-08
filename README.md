@@ -1,6 +1,9 @@
 # 测试case
 查看[百度脑图](http://naotu.baidu.com/file/c256288088a1359a6dcdadd90cc6b0cc?token=086cb65c016d2bd2)附件
 
+#Usage
+- `npm install io-animation`
+
 # 测试页面
 见demo
 
@@ -195,7 +198,7 @@
       - `isRuning`：当前动画执行状态，执行中/执行完成；
       - `asyncQueue`：动画队列，存储串并行动画对象；
       - `endCallback`：并行动画全部执行完成的回调队列；
-      - `animate(ele, property, opt)`：动画开始入口；        
+      - `animate(ele, property, opt)`：动画开始入口；
       - `start(fn)`：结束并行动画，其中可以传入回调；
       - `stop()`：停止当前动画；
 
